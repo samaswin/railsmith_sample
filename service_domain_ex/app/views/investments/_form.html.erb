@@ -1,0 +1,36 @@
+<%= form_with model: investment do |form| %>
+  <% if investment.errors.any? %>
+    <div style="border: 1px solid #f2b; padding: 12px; margin: 16px 0;">
+      <p style="margin: 0 0 8px;"><strong><%= pluralize(investment.errors.count, "error") %> prevented saving:</strong></p>
+      <ul style="margin: 0; padding-left: 18px;">
+        <% investment.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+    <div>
+      <%= form.label :name %><br>
+      <%= form.text_field :name, style: "width: 100%;" %>
+    </div>
+    <div>
+      <%= form.label :kind %><br>
+      <%= form.text_field :kind, style: "width: 100%;" %>
+    </div>
+    <div>
+      <%= form.label :amount_cents %><br>
+      <%= form.number_field :amount_cents, style: "width: 100%;" %>
+    </div>
+    <div>
+      <%= form.label :purchased_on %><br>
+      <%= form.date_field :purchased_on, style: "width: 100%;" %>
+    </div>
+  </div>
+
+  <div style="margin-top: 16px;">
+    <%= form.submit %>
+  </div>
+<% end %>
+

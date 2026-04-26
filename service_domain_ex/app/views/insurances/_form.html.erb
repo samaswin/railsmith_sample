@@ -1,0 +1,40 @@
+<%= form_with model: insurance do |form| %>
+  <% if insurance.errors.any? %>
+    <div style="border: 1px solid #f2b; padding: 12px; margin: 16px 0;">
+      <p style="margin: 0 0 8px;"><strong><%= pluralize(insurance.errors.count, "error") %> prevented saving:</strong></p>
+      <ul style="margin: 0; padding-left: 18px;">
+        <% insurance.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+    <div>
+      <%= form.label :provider %><br>
+      <%= form.text_field :provider, style: "width: 100%;" %>
+    </div>
+    <div>
+      <%= form.label :policy_number %><br>
+      <%= form.text_field :policy_number, style: "width: 100%;" %>
+    </div>
+    <div>
+      <%= form.label :premium_cents %><br>
+      <%= form.number_field :premium_cents, style: "width: 100%;" %>
+    </div>
+    <div>
+      <%= form.label :starts_on %><br>
+      <%= form.date_field :starts_on, style: "width: 100%;" %>
+    </div>
+    <div>
+      <%= form.label :ends_on %><br>
+      <%= form.date_field :ends_on, style: "width: 100%;" %>
+    </div>
+  </div>
+
+  <div style="margin-top: 16px;">
+    <%= form.submit %>
+  </div>
+<% end %>
+

@@ -1,0 +1,32 @@
+<main style="max-width: 880px; margin: 40px auto; padding: 0 16px;">
+  <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px;">
+    <h1 style="margin: 0;">Insurance</h1>
+    <div style="display: flex; gap: 12px;">
+      <%= link_to "Edit", edit_insurance_path(@insurance) %>
+      <%= button_to "Delete", insurance_path(@insurance), method: :delete, form: { data: { turbo_confirm: "Delete this insurance?" } } %>
+      <%= link_to "Back", insurances_path %>
+    </div>
+  </div>
+
+  <% if notice.present? %>
+    <p style="color: #0a7; margin-top: 16px;"><%= notice %></p>
+  <% end %>
+
+  <dl style="margin-top: 16px;">
+    <dt><strong>Provider</strong></dt>
+    <dd style="margin: 0 0 12px;"><%= @insurance.provider %></dd>
+
+    <dt><strong>Policy number</strong></dt>
+    <dd style="margin: 0 0 12px;"><%= @insurance.policy_number %></dd>
+
+    <dt><strong>Premium (cents)</strong></dt>
+    <dd style="margin: 0 0 12px;"><%= @insurance.premium_cents %></dd>
+
+    <dt><strong>Starts on</strong></dt>
+    <dd style="margin: 0 0 12px;"><%= @insurance.starts_on %></dd>
+
+    <dt><strong>Ends on</strong></dt>
+    <dd style="margin: 0;"><%= @insurance.ends_on %></dd>
+  </dl>
+</main>
+

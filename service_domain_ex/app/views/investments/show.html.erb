@@ -1,0 +1,29 @@
+<main style="max-width: 880px; margin: 40px auto; padding: 0 16px;">
+  <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px;">
+    <h1 style="margin: 0;">Investment</h1>
+    <div style="display: flex; gap: 12px;">
+      <%= link_to "Edit", edit_investment_path(@investment) %>
+      <%= button_to "Delete", investment_path(@investment), method: :delete, form: { data: { turbo_confirm: "Delete this investment?" } } %>
+      <%= link_to "Back", investments_path %>
+    </div>
+  </div>
+
+  <% if notice.present? %>
+    <p style="color: #0a7; margin-top: 16px;"><%= notice %></p>
+  <% end %>
+
+  <dl style="margin-top: 16px;">
+    <dt><strong>Name</strong></dt>
+    <dd style="margin: 0 0 12px;"><%= @investment.name %></dd>
+
+    <dt><strong>Kind</strong></dt>
+    <dd style="margin: 0 0 12px;"><%= @investment.kind %></dd>
+
+    <dt><strong>Amount (cents)</strong></dt>
+    <dd style="margin: 0 0 12px;"><%= @investment.amount_cents %></dd>
+
+    <dt><strong>Purchased on</strong></dt>
+    <dd style="margin: 0;"><%= @investment.purchased_on %></dd>
+  </dl>
+</main>
+

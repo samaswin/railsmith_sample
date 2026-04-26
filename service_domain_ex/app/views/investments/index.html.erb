@@ -1,0 +1,39 @@
+<main style="max-width: 980px; margin: 40px auto; padding: 0 16px;">
+  <div style="display: flex; align-items: center; justify-content: space-between; gap: 16px;">
+    <h1 style="margin: 0;">Investments</h1>
+    <div style="display: flex; gap: 12px;">
+      <%= link_to "New investment", new_investment_path %>
+      <%= link_to "Home", root_path %>
+    </div>
+  </div>
+
+  <% if notice.present? %>
+    <p style="color: #0a7; margin-top: 16px;"><%= notice %></p>
+  <% end %>
+
+  <table style="width: 100%; border-collapse: collapse; margin-top: 16px;">
+    <thead>
+      <tr>
+        <th style="text-align: left; border-bottom: 1px solid #ddd; padding: 8px;">Name</th>
+        <th style="text-align: left; border-bottom: 1px solid #ddd; padding: 8px;">Kind</th>
+        <th style="text-align: right; border-bottom: 1px solid #ddd; padding: 8px;">Amount (cents)</th>
+        <th style="text-align: left; border-bottom: 1px solid #ddd; padding: 8px;">Purchased on</th>
+        <th style="border-bottom: 1px solid #ddd; padding: 8px;"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @investments.each do |investment| %>
+        <tr>
+          <td style="border-bottom: 1px solid #eee; padding: 8px;"><%= investment.name %></td>
+          <td style="border-bottom: 1px solid #eee; padding: 8px;"><%= investment.kind %></td>
+          <td style="border-bottom: 1px solid #eee; padding: 8px; text-align: right;"><%= investment.amount_cents %></td>
+          <td style="border-bottom: 1px solid #eee; padding: 8px;"><%= investment.purchased_on %></td>
+          <td style="border-bottom: 1px solid #eee; padding: 8px; text-align: right;">
+            <%= link_to "Show", investment_path(investment) %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</main>
+

@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  provider: MyString
+  policy_number: MyString
+  premium_cents: 1
+  starts_on: 2026-04-26
+  ends_on: 2026-04-26
+
+two:
+  provider: MyString
+  policy_number: MyString
+  premium_cents: 1
+  starts_on: 2026-04-26
+  ends_on: 2026-04-26

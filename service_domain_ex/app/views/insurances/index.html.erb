@@ -1,0 +1,41 @@
+<main style="max-width: 980px; margin: 40px auto; padding: 0 16px;">
+  <div style="display: flex; align-items: center; justify-content: space-between; gap: 16px;">
+    <h1 style="margin: 0;">Insurances</h1>
+    <div style="display: flex; gap: 12px;">
+      <%= link_to "New insurance", new_insurance_path %>
+      <%= link_to "Home", root_path %>
+    </div>
+  </div>
+
+  <% if notice.present? %>
+    <p style="color: #0a7; margin-top: 16px;"><%= notice %></p>
+  <% end %>
+
+  <table style="width: 100%; border-collapse: collapse; margin-top: 16px;">
+    <thead>
+      <tr>
+        <th style="text-align: left; border-bottom: 1px solid #ddd; padding: 8px;">Provider</th>
+        <th style="text-align: left; border-bottom: 1px solid #ddd; padding: 8px;">Policy #</th>
+        <th style="text-align: right; border-bottom: 1px solid #ddd; padding: 8px;">Premium (cents)</th>
+        <th style="text-align: left; border-bottom: 1px solid #ddd; padding: 8px;">Starts</th>
+        <th style="text-align: left; border-bottom: 1px solid #ddd; padding: 8px;">Ends</th>
+        <th style="border-bottom: 1px solid #ddd; padding: 8px;"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @insurances.each do |insurance| %>
+        <tr>
+          <td style="border-bottom: 1px solid #eee; padding: 8px;"><%= insurance.provider %></td>
+          <td style="border-bottom: 1px solid #eee; padding: 8px;"><%= insurance.policy_number %></td>
+          <td style="border-bottom: 1px solid #eee; padding: 8px; text-align: right;"><%= insurance.premium_cents %></td>
+          <td style="border-bottom: 1px solid #eee; padding: 8px;"><%= insurance.starts_on %></td>
+          <td style="border-bottom: 1px solid #eee; padding: 8px;"><%= insurance.ends_on %></td>
+          <td style="border-bottom: 1px solid #eee; padding: 8px; text-align: right;">
+            <%= link_to "Show", insurance_path(insurance) %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</main>
+
