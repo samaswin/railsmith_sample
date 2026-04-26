@@ -1,0 +1,54 @@
+# PostgreSQL. Versions 9.5 and up are supported.
+#
+# Install the pg driver:
+#   gem install pg
+#
+# Configure Using Gemfile
+# gem "pg"
+#
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  max_connections: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  # For details on connection pooling, see Rails configuration guide
+  # https://guides.rubyonrails.org/configuring.html#database-pooling
+
+development:
+  <<: *default
+  database: <%= ENV.fetch("POSTGRES_DB", "service_domain_ex_development") %>
+  host: <%= ENV.fetch("POSTGRES_HOST", "127.0.0.1") %>
+  port: <%= ENV.fetch("POSTGRES_PORT", 5432) %>
+  username: <%= ENV.fetch("POSTGRES_USER", "aswin") %>
+  password: <%= ENV.fetch("POSTGRES_PASSWORD", "aswin") %>
+
+# Warning: The database defined as "test" will be erased and
+# re-generated from your development database when you run "rake".
+# Do not set this db to the same as development or production.
+test:
+  <<: *default
+  database: <%= ENV.fetch("POSTGRES_TEST_DB", "service_domain_ex_test") %>
+  host: <%= ENV.fetch("POSTGRES_HOST", "127.0.0.1") %>
+  port: <%= ENV.fetch("POSTGRES_PORT", 5432) %>
+  username: <%= ENV.fetch("POSTGRES_USER", "aswin") %>
+  password: <%= ENV.fetch("POSTGRES_PASSWORD", "aswin") %>
+
+production:
+  primary: &primary_production
+    <<: *default
+    database: <%= ENV.fetch("POSTGRES_DB", "service_domain_ex_production") %>
+    host: <%= ENV.fetch("POSTGRES_HOST", "127.0.0.1") %>
+    port: <%= ENV.fetch("POSTGRES_PORT", 5432) %>
+    username: <%= ENV.fetch("POSTGRES_USER", "service_domain_ex") %>
+    password: <%= ENV.fetch("POSTGRES_PASSWORD") { ENV["SERVICE_DOMAIN_EX_DATABASE_PASSWORD"] } %>
+  cache:
+    <<: *primary_production
+    database: <%= ENV.fetch("POSTGRES_CACHE_DB", "service_domain_ex_production_cache") %>
+    migrations_paths: db/cache_migrate
+  queue:
+    <<: *primary_production
+    database: <%= ENV.fetch("POSTGRES_QUEUE_DB", "service_domain_ex_production_queue") %>
+    migrations_paths: db/queue_migrate
+  cable:
+    <<: *primary_production
+    database: <%= ENV.fetch("POSTGRES_CABLE_DB", "service_domain_ex_production_cable") %>
+    migrations_paths: db/cable_migrate
