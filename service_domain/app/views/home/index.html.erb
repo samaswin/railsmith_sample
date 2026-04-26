@@ -1,0 +1,20 @@
+<div style="max-width: 900px; margin: 32px auto; padding: 0 16px;">
+  <h1>Service Domain UI</h1>
+
+  <p>Use these links to test CRUD flows for each domain.</p>
+
+  <div style="display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); margin-top: 20px;">
+    <div style="border: 1px solid #e5e7eb; border-radius: 8px; padding: 16px;">
+      <h2 style="margin-top: 0;">Banking</h2>
+      <p style="margin-bottom: 12px;">Investments</p>
+      <%= link_to "Open Banking Investments", banking_investments_path, style: "display:inline-block; padding: 8px 12px; border: 1px solid #111827; border-radius: 6px; text-decoration:none;" %>
+    </div>
+
+    <div style="border: 1px solid #e5e7eb; border-radius: 8px; padding: 16px;">
+      <h2 style="margin-top: 0;">Medical</h2>
+      <p style="margin-bottom: 12px;">Insurances</p>
+      <%= link_to "Open Medical Insurances", medical_insurances_path, style: "display:inline-block; padding: 8px 12px; border: 1px solid #111827; border-radius: 6px; text-decoration:none;" %>
+    </div>
+  </div>
+</div>
+

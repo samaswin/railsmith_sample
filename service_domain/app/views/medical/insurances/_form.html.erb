@@ -1,0 +1,48 @@
+<%= form_with model: insurance, url: (insurance.persisted? ? medical_insurance_path(insurance) : medical_insurances_path) do |f| %>
+  <% if insurance.errors.any? %>
+    <div style="padding: 10px 12px; border: 1px solid #fecaca; background: #fef2f2; border-radius: 6px; margin-bottom: 14px;">
+      <div style="font-weight: 600; margin-bottom: 6px;">
+        <%= pluralize(insurance.errors.count, "error") %> prevented saving:
+      </div>
+      <ul style="margin: 0; padding-left: 18px;">
+        <% insurance.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div style="display:grid; gap: 12px;">
+    <div>
+      <%= f.label :policy_number %><br>
+      <%= f.text_field :policy_number, style: "width: 100%; padding: 8px; border: 1px solid #d1d5db; border-radius: 6px;" %>
+    </div>
+
+    <div>
+      <%= f.label :provider %><br>
+      <%= f.text_field :provider, style: "width: 100%; padding: 8px; border: 1px solid #d1d5db; border-radius: 6px;" %>
+    </div>
+
+    <div>
+      <%= f.label :premium_cents %><br>
+      <%= f.number_field :premium_cents, min: 0, step: 1, style: "width: 100%; padding: 8px; border: 1px solid #d1d5db; border-radius: 6px;" %>
+    </div>
+
+    <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+      <div>
+        <%= f.label :starts_on %><br>
+        <%= f.date_field :starts_on, style: "width: 100%; padding: 8px; border: 1px solid #d1d5db; border-radius: 6px;" %>
+      </div>
+      <div>
+        <%= f.label :ends_on %><br>
+        <%= f.date_field :ends_on, style: "width: 100%; padding: 8px; border: 1px solid #d1d5db; border-radius: 6px;" %>
+      </div>
+    </div>
+  </div>
+
+  <div style="margin-top: 16px; display:flex; gap: 10px;">
+    <%= f.submit style: "padding: 8px 12px; border: 1px solid #111827; border-radius: 6px; background: #111827; color: white;" %>
+    <%= link_to "Cancel", medical_insurances_path, style: "padding: 8px 12px; border: 1px solid #d1d5db; border-radius: 6px; text-decoration:none;" %>
+  </div>
+<% end %>
+

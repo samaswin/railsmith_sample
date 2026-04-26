@@ -1,0 +1,38 @@
+<div style="max-width: 720px; margin: 32px auto; padding: 0 16px;">
+  <div style="display:flex; align-items:center; justify-content: space-between; gap: 12px;">
+    <div>
+      <h1 style="margin: 0;"><%= @insurance.policy_number %></h1>
+      <p style="margin: 6px 0 0; color:#4b5563;">domain: medical</p>
+    </div>
+    <div style="display:flex; gap: 10px;">
+      <%= link_to "Back", medical_insurances_path, style: "padding: 8px 12px; border: 1px solid #d1d5db; border-radius: 6px; text-decoration:none;" %>
+      <%= link_to "Edit", edit_medical_insurance_path(@insurance), style: "padding: 8px 12px; border: 1px solid #111827; border-radius: 6px; text-decoration:none;" %>
+    </div>
+  </div>
+
+  <% if notice.present? %>
+    <div style="margin-top: 16px; padding: 10px 12px; border: 1px solid #bbf7d0; background: #f0fdf4; border-radius: 6px;">
+      <%= notice %>
+    </div>
+  <% end %>
+
+  <div style="margin-top: 18px; border: 1px solid #e5e7eb; border-radius: 8px; padding: 14px;">
+    <dl style="margin: 0; display:grid; grid-template-columns: 180px 1fr; gap: 10px 14px;">
+      <dt style="color:#6b7280;">Provider</dt>
+      <dd style="margin: 0;"><%= @insurance.provider %></dd>
+      <dt style="color:#6b7280;">Premium (cents)</dt>
+      <dd style="margin: 0;"><%= @insurance.premium_cents %></dd>
+      <dt style="color:#6b7280;">Starts on</dt>
+      <dd style="margin: 0;"><%= @insurance.starts_on %></dd>
+      <dt style="color:#6b7280;">Ends on</dt>
+      <dd style="margin: 0;"><%= @insurance.ends_on %></dd>
+      <dt style="color:#6b7280;">Created</dt>
+      <dd style="margin: 0;"><%= @insurance.created_at %></dd>
+    </dl>
+  </div>
+
+  <div style="margin-top: 16px;">
+    <%= button_to "Delete", medical_insurance_path(@insurance), method: :delete, data: { turbo_confirm: "Delete this insurance?" } %>
+  </div>
+</div>
+

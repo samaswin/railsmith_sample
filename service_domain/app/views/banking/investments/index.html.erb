@@ -1,0 +1,55 @@
+<div style="max-width: 900px; margin: 32px auto; padding: 0 16px;">
+  <div style="display:flex; gap: 12px; align-items: center; justify-content: space-between;">
+    <div>
+      <h1 style="margin: 0;">Banking · Investments</h1>
+      <p style="margin: 6px 0 0; color: #4b5563;">CRUD UI (domain: banking)</p>
+    </div>
+    <div style="display:flex; gap: 10px;">
+      <%= link_to "Home", root_path, style: "padding: 8px 12px; border: 1px solid #d1d5db; border-radius: 6px; text-decoration:none;" %>
+      <%= link_to "New Investment", new_banking_investment_path, style: "padding: 8px 12px; border: 1px solid #111827; border-radius: 6px; text-decoration:none;" %>
+    </div>
+  </div>
+
+  <% if notice.present? %>
+    <div style="margin-top: 16px; padding: 10px 12px; border: 1px solid #bbf7d0; background: #f0fdf4; border-radius: 6px;">
+      <%= notice %>
+    </div>
+  <% end %>
+
+  <div style="margin-top: 18px; border: 1px solid #e5e7eb; border-radius: 8px; overflow:hidden;">
+    <table style="width:100%; border-collapse: collapse;">
+      <thead style="background:#f9fafb;">
+        <tr>
+          <th style="text-align:left; padding: 10px 12px; border-bottom: 1px solid #e5e7eb;">Name</th>
+          <th style="text-align:left; padding: 10px 12px; border-bottom: 1px solid #e5e7eb;">Kind</th>
+          <th style="text-align:right; padding: 10px 12px; border-bottom: 1px solid #e5e7eb;">Amount (cents)</th>
+          <th style="text-align:left; padding: 10px 12px; border-bottom: 1px solid #e5e7eb;">Purchased</th>
+          <th style="padding: 10px 12px; border-bottom: 1px solid #e5e7eb;"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @investments.each do |inv| %>
+          <tr>
+            <td style="padding: 10px 12px; border-bottom: 1px solid #f3f4f6;">
+              <%= link_to inv.name, banking_investment_path(inv) %>
+            </td>
+            <td style="padding: 10px 12px; border-bottom: 1px solid #f3f4f6;"><%= inv.kind %></td>
+            <td style="padding: 10px 12px; border-bottom: 1px solid #f3f4f6; text-align:right;"><%= inv.amount_cents %></td>
+            <td style="padding: 10px 12px; border-bottom: 1px solid #f3f4f6;"><%= inv.purchased_on %></td>
+            <td style="padding: 10px 12px; border-bottom: 1px solid #f3f4f6; text-align:right; white-space:nowrap;">
+              <%= link_to "Edit", edit_banking_investment_path(inv) %>
+              |
+              <%= button_to "Delete", banking_investment_path(inv), method: :delete, form: { style: "display:inline" }, data: { turbo_confirm: "Delete this investment?" } %>
+            </td>
+          </tr>
+        <% end %>
+        <% if @investments.empty? %>
+          <tr>
+            <td colspan="5" style="padding: 12px; color:#6b7280;">No investments yet.</td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
+

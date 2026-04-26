@@ -1,0 +1,42 @@
+<%= form_with model: investment, url: (investment.persisted? ? banking_investment_path(investment) : banking_investments_path) do |f| %>
+  <% if investment.errors.any? %>
+    <div style="padding: 10px 12px; border: 1px solid #fecaca; background: #fef2f2; border-radius: 6px; margin-bottom: 14px;">
+      <div style="font-weight: 600; margin-bottom: 6px;">
+        <%= pluralize(investment.errors.count, "error") %> prevented saving:
+      </div>
+      <ul style="margin: 0; padding-left: 18px;">
+        <% investment.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div style="display:grid; gap: 12px;">
+    <div>
+      <%= f.label :name %><br>
+      <%= f.text_field :name, style: "width: 100%; padding: 8px; border: 1px solid #d1d5db; border-radius: 6px;" %>
+    </div>
+
+    <div>
+      <%= f.label :kind %><br>
+      <%= f.text_field :kind, style: "width: 100%; padding: 8px; border: 1px solid #d1d5db; border-radius: 6px;" %>
+    </div>
+
+    <div>
+      <%= f.label :amount_cents %><br>
+      <%= f.number_field :amount_cents, min: 0, step: 1, style: "width: 100%; padding: 8px; border: 1px solid #d1d5db; border-radius: 6px;" %>
+    </div>
+
+    <div>
+      <%= f.label :purchased_on %><br>
+      <%= f.date_field :purchased_on, style: "width: 100%; padding: 8px; border: 1px solid #d1d5db; border-radius: 6px;" %>
+    </div>
+  </div>
+
+  <div style="margin-top: 16px; display:flex; gap: 10px;">
+    <%= f.submit style: "padding: 8px 12px; border: 1px solid #111827; border-radius: 6px; background: #111827; color: white;" %>
+    <%= link_to "Cancel", banking_investments_path, style: "padding: 8px 12px; border: 1px solid #d1d5db; border-radius: 6px; text-decoration:none;" %>
+  </div>
+<% end %>
+
