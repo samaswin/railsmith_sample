@@ -1,0 +1,138 @@
+<div style="max-width: 980px; margin: 32px auto; padding: 0 16px;">
+  <div style="display:flex; align-items:center; justify-content: space-between; gap: 12px;">
+    <div>
+      <h1 style="margin: 0;">Railsmith Pipelines</h1>
+      <p style="margin: 6px 0 0; color:#4b5563;">Run pipelines from the UI and inspect Railsmith::Result output.</p>
+    </div>
+    <div style="display:flex; gap: 10px;">
+      <%= link_to "Home", root_path, style: "padding: 8px 12px; border: 1px solid #d1d5db; border-radius: 6px; text-decoration:none;" %>
+      <%= link_to "Banking Investments", banking_investments_path, style: "padding: 8px 12px; border: 1px solid #d1d5db; border-radius: 6px; text-decoration:none;" %>
+      <%= link_to "Medical Insurances", medical_insurances_path, style: "padding: 8px 12px; border: 1px solid #d1d5db; border-radius: 6px; text-decoration:none;" %>
+    </div>
+  </div>
+
+  <% if alert.present? %>
+    <div style="margin-top: 16px; padding: 10px 12px; border: 1px solid #fecaca; background: #fef2f2; border-radius: 6px;">
+      <%= alert %>
+    </div>
+  <% end %>
+
+  <div style="margin-top: 18px; border: 1px solid #e5e7eb; border-radius: 8px; padding: 14px;">
+    <%= form_with url: run_pipelines_path, method: :post, data: { turbo: false } do |f| %>
+      <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+        <div>
+          <%= label_tag :pipeline_key, "Pipeline" %><br>
+          <%= select_tag :pipeline_key,
+                         options_for_select(@pipelines.keys, @selected_pipeline_key),
+                         style: "width:100%; padding: 8px; border: 1px solid #d1d5db; border-radius: 6px;" %>
+        </div>
+        <div>
+          <%= label_tag :context_domain, "context[:current_domain]" %><br>
+          <%= select_tag :context_domain,
+                         options_for_select([["banking", "banking"], ["medical", "medical"]], (@context_domain || :banking).to_s),
+                         style: "width:100%; padding: 8px; border: 1px solid #d1d5db; border-radius: 6px;" %>
+        </div>
+      </div>
+
+      <div style="margin-top: 14px; display:grid; grid-template-columns: 1fr 1fr; gap: 14px;">
+        <div style="border: 1px solid #e5e7eb; border-radius: 8px; padding: 12px;">
+          <h2 style="margin: 0 0 10px; font-size: 16px;">Investment attributes</h2>
+          <div style="display:grid; gap: 10px;">
+            <div>
+              <%= label_tag "investment_attributes[name]", "name" %><br>
+              <%= text_field_tag "investment_attributes[name]", @submitted_params&.dig(:investment_attributes, "name"),
+                                 style: "width:100%; padding: 8px; border: 1px solid #d1d5db; border-radius: 6px;" %>
+            </div>
+            <div>
+              <%= label_tag "investment_attributes[kind]", "kind" %><br>
+              <%= text_field_tag "investment_attributes[kind]", @submitted_params&.dig(:investment_attributes, "kind"),
+                                 style: "width:100%; padding: 8px; border: 1px solid #d1d5db; border-radius: 6px;" %>
+            </div>
+            <div>
+              <%= label_tag "investment_attributes[amount_cents]", "amount_cents" %><br>
+              <%= number_field_tag "investment_attributes[amount_cents]", @submitted_params&.dig(:investment_attributes, "amount_cents"),
+                                   min: 0, step: 1,
+                                   style: "width:100%; padding: 8px; border: 1px solid #d1d5db; border-radius: 6px;" %>
+            </div>
+            <div>
+              <%= label_tag "investment_attributes[purchased_on]", "purchased_on" %><br>
+              <%= date_field_tag "investment_attributes[purchased_on]", @submitted_params&.dig(:investment_attributes, "purchased_on"),
+                                 style: "width:100%; padding: 8px; border: 1px solid #d1d5db; border-radius: 6px;" %>
+            </div>
+          </div>
+        </div>
+
+        <div style="border: 1px solid #e5e7eb; border-radius: 8px; padding: 12px;">
+          <h2 style="margin: 0 0 10px; font-size: 16px;">Insurance attributes</h2>
+          <div style="display:grid; gap: 10px;">
+            <div>
+              <%= label_tag "insurance_attributes[policy_number]", "policy_number" %><br>
+              <%= text_field_tag "insurance_attributes[policy_number]", @submitted_params&.dig(:insurance_attributes, "policy_number"),
+                                 style: "width:100%; padding: 8px; border: 1px solid #d1d5db; border-radius: 6px;" %>
+            </div>
+            <div>
+              <%= label_tag "insurance_attributes[provider]", "provider" %><br>
+              <%= text_field_tag "insurance_attributes[provider]", @submitted_params&.dig(:insurance_attributes, "provider"),
+                                 style: "width:100%; padding: 8px; border: 1px solid #d1d5db; border-radius: 6px;" %>
+            </div>
+            <div>
+              <%= label_tag "insurance_attributes[premium_cents]", "premium_cents" %><br>
+              <%= number_field_tag "insurance_attributes[premium_cents]", @submitted_params&.dig(:insurance_attributes, "premium_cents"),
+                                   min: 0, step: 1,
+                                   style: "width:100%; padding: 8px; border: 1px solid #d1d5db; border-radius: 6px;" %>
+            </div>
+            <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+              <div>
+                <%= label_tag "insurance_attributes[starts_on]", "starts_on" %><br>
+                <%= date_field_tag "insurance_attributes[starts_on]", @submitted_params&.dig(:insurance_attributes, "starts_on"),
+                                   style: "width:100%; padding: 8px; border: 1px solid #d1d5db; border-radius: 6px;" %>
+              </div>
+              <div>
+                <%= label_tag "insurance_attributes[ends_on]", "ends_on" %><br>
+                <%= date_field_tag "insurance_attributes[ends_on]", @submitted_params&.dig(:insurance_attributes, "ends_on"),
+                                   style: "width:100%; padding: 8px; border: 1px solid #d1d5db; border-radius: 6px;" %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-top: 14px;">
+        <%= f.submit "Run pipeline", style: "padding: 8px 12px; border: 1px solid #111827; border-radius: 6px; background: #111827; color: white;" %>
+      </div>
+    <% end %>
+  </div>
+
+  <% if defined?(@result) && @result.present? %>
+    <div style="margin-top: 18px; border: 1px solid #e5e7eb; border-radius: 8px; padding: 14px;">
+      <h2 style="margin-top: 0;">Result</h2>
+
+      <div style="display:grid; grid-template-columns: 180px 1fr; gap: 10px 14px;">
+        <div style="color:#6b7280;">success?</div>
+        <div><%= @result.success? %></div>
+
+        <div style="color:#6b7280;">value.class</div>
+        <div><%= @result.value.class if @result.respond_to?(:value) %></div>
+
+        <div style="color:#6b7280;">error</div>
+        <div><%= @result.failure? ? (@result.error.respond_to?(:message) ? @result.error.message : @result.error.to_s) : "-" %></div>
+
+        <div style="color:#6b7280;">meta</div>
+        <div><pre style="margin: 0; white-space: pre-wrap;"><%= @result.respond_to?(:meta) ? @result.meta.inspect : "-" %></pre></div>
+      </div>
+
+      <div style="margin-top: 14px;">
+        <h3 style="margin: 0 0 8px;">value.inspect</h3>
+        <pre style="margin: 0; white-space: pre-wrap;"><%= @result.respond_to?(:value) ? @result.value.inspect : "-" %></pre>
+      </div>
+    </div>
+
+    <% if @cross_domain_warnings.present? %>
+      <div style="margin-top: 18px; border: 1px solid #fde68a; background: #fffbeb; border-radius: 8px; padding: 14px;">
+        <h2 style="margin-top: 0;">Cross-domain warnings</h2>
+        <pre style="margin: 0; white-space: pre-wrap;"><%= @cross_domain_warnings.map { |w| w.slice(:context_domain, :service_domain, :service, :action, :strict_mode) }.inspect %></pre>
+      </div>
+    <% end %>
+  <% end %>
+</div>
+
